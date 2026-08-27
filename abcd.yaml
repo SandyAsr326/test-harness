@@ -1,0 +1,13 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: sandeepttestQA
+  identifier: tt1_dev
+  name: tt1_dev
+  type: Application
+  description: ""
+  serviceRef: tt1
+  environmentRef: dev
+  environmentRefList:
+  - dev
+  sources: {}
+  enabled: false
