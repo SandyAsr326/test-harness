@@ -1,0 +1,13 @@
+monitoredService:
+  orgIdentifier: default
+  projectIdentifier: sandeepttestQA
+  identifier: fcdswdcefw_dev
+  name: fcdswdcefw_dev
+  type: Application
+  description: ""
+  serviceRef: fcdswdcefw
+  environmentRef: dev
+  environmentRefList:
+  - dev
+  sources: {}
+  enabled: false
