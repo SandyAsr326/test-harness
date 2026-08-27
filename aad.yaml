@@ -11,6 +11,41 @@ monitoredService:
   - local_k3d_env
   sources:
     healthSources:
+    - name: cs1
+      identifier: cs1
+      type: SumologicMetrics
+      version: v2
+      spec:
+        connectorRef: smo
+        queryDefinitions:
+        - identifier: m1
+          name: m1
+          groupName: 1
+          queryParams:
+            serviceInstanceField: _sourceHost
+          liveMonitoringEnabled: false
+          continuousVerificationEnabled: true
+          sliEnabled: false
+          query: |
+            * | count
+          metricThresholds:
+          - metricName: m1
+            metricType: Custom
+            spec:
+              action: FailImmediately
+              spec: {}
+            criteria:
+              type: Absolute
+              spec:
+                greaterThan: 1.0
+            type: FailImmediately
+          riskProfile:
+            category: Performance
+            metricType: THROUGHPUT
+            riskCategory: Performance_Throughput
+            thresholdTypes:
+            - ACT_WHEN_HIGHER
+        healthSourceParams: {}
     - name: prom11
       identifier: prom11
       type: Prometheus
