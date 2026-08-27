@@ -27,7 +27,7 @@ monitoredService:
               action: FailImmediately
               spec: {}
             criteria:
-              type: Percentage
+              type: Absolute
               spec:
                 greaterThan: 33.0
             type: FailImmediately
@@ -36,10 +36,10 @@ monitoredService:
           metricName: Prometheus Metric
           riskProfile:
             category: Performance
-            metricType: RESP_TIME
-            riskCategory: Performance_ResponseTime
+            metricType: OTHER
+            riskCategory: Performance_Other
             thresholdTypes:
-            - ACT_WHEN_HIGHER
+            - ACT_WHEN_LOWER
           analysis:
             liveMonitoring:
               enabled: false
@@ -48,10 +48,10 @@ monitoredService:
               serviceInstanceFieldName: code
             riskProfile:
               category: Performance
-              metricType: RESP_TIME
-              riskCategory: Performance_ResponseTime
+              metricType: OTHER
+              riskCategory: Performance_Other
               thresholdTypes:
-              - ACT_WHEN_HIGHER
+              - ACT_WHEN_LOWER
           sli:
             enabled: false
           query: "max(\n\tcpu_usage_ratio\t{\n\n\t\tenv=\"env\",\n\t\tbranch=\"HEAD\"\
