@@ -54,7 +54,8 @@ monitoredService:
               - ACT_WHEN_HIGHER
           sli:
             enabled: false
-          query: "max(cpu_usage_ratio{env=\"env\",env=\"env\",branch=\"HEAD\"})"
+          query: "max(\n\tcpu_usage_ratio\t{\n\n\t\tenv=\"env\",\n\t\tbranch=\"HEAD\"\
+            ,\n\t\tenv=\"env\"\n\n})"
           groupName: gn
           serviceInstanceFieldName: code
           prometheusMetric: cpu_usage_ratio
