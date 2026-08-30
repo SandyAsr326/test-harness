@@ -9,5 +9,63 @@ monitoredService:
   environmentRef: local_k3d_env
   environmentRefList:
   - local_k3d_env
-  sources: {}
+  sources:
+    healthSources:
+    - name: prom1
+      identifier: prom1
+      type: Prometheus
+      spec:
+        connectorRef: promt1
+        metricPacks:
+        - identifier: Custom
+          metricThresholds:
+          - groupName: gn
+            metricName: Prometheus Metric
+            metricIdentifier: prometheus_metric
+            metricType: Custom
+            spec:
+              action: FailImmediately
+              spec: {}
+            criteria:
+              type: Percentage
+              spec:
+                greaterThan: 33.0
+            type: FailImmediately
+        metricDefinitions:
+        - identifier: prometheus_metric
+          metricName: Prometheus Metric
+          riskProfile:
+            category: Performance
+            metricType: RESP_TIME
+            riskCategory: Performance_ResponseTime
+            thresholdTypes:
+            - ACT_WHEN_HIGHER
+          analysis:
+            liveMonitoring:
+              enabled: false
+            deploymentVerification:
+              enabled: true
+              serviceInstanceFieldName: code
+            riskProfile:
+              category: Performance
+              metricType: RESP_TIME
+              riskCategory: Performance_ResponseTime
+              thresholdTypes:
+              - ACT_WHEN_HIGHER
+          sli:
+            enabled: false
+          query: "max(cpu_usage_ratio{env=\"env\",env=\"env\",branch=\"HEAD\"})"
+          groupName: gn
+          serviceInstanceFieldName: code
+          prometheusMetric: cpu_usage_ratio
+          serviceFilter:
+          - labelName: env
+            labelValue: env
+          envFilter:
+          - labelName: env
+            labelValue: env
+          - labelName: branch
+            labelValue: HEAD
+          aggregation: max
+          isManualQuery: false
   enabled: false
