@@ -9,5 +9,77 @@ monitoredService:
   environmentRef: local_k3d_env
   environmentRefList:
   - local_k3d_env
-  sources: {}
+  sources:
+    healthSources:
+    - name: chs11
+      identifier: chs1
+      type: CustomHealthMetric
+      spec:
+        connectorRef: Local_Custom_Health
+        metricPacks:
+        - identifier: Custom
+          metricThresholds:
+          - groupName: gn1
+            metricName: CustomHealth Metric
+            metricIdentifier: CustomHealth_Metric
+            metricType: Custom
+            spec:
+              action: FailImmediately
+              spec: {}
+            criteria:
+              type: Absolute
+              spec:
+                lessThan: 22.0
+                greaterThan: 2.0
+            type: FailImmediately
+        metricDefinitions:
+        - identifier: CustomHealth_Metric
+          metricName: CustomHealth Metric
+          riskProfile:
+            category: Performance
+            metricType: THROUGHPUT
+            riskCategory: Performance_Throughput
+            thresholdTypes:
+            - ACT_WHEN_LOWER
+            - ACT_WHEN_HIGHER
+          analysis:
+            liveMonitoring:
+              enabled: false
+            deploymentVerification:
+              enabled: true
+              serviceInstanceMetricPath: "$.[*].['metricPath']"
+            riskProfile:
+              category: Performance
+              metricType: THROUGHPUT
+              riskCategory: Performance_Throughput
+              thresholdTypes:
+              - ACT_WHEN_LOWER
+              - ACT_WHEN_HIGHER
+          sli:
+            enabled: false
+          requestDefinition:
+            urlPath: metrics
+            requestBody: |
+              {"start":"start_tim","end":"end_time"}
+            method: POST
+            startTimeInfo:
+              placeholder: start_tim
+              timestampFormat: SECONDS
+              customTimestampFormat: ""
+            endTimeInfo:
+              placeholder: end_time
+              timestampFormat: SECONDS
+              customTimestampFormat: ""
+          queryType: HOST_BASED
+          metricResponseMapping:
+            metricValueJsonPath: "$.[*].['metricValues'].[*].['value']"
+            timestampJsonPath: "$.[*].['metricValues'].[*].['startTimeInMillis']"
+            serviceInstanceJsonPath: "$.[*].['metricPath']"
+            serviceInstanceListJsonPath: $
+            relativeMetricListJsonPath: "['metricValues']"
+            relativeTimestampJsonPath: "['startTimeInMillis']"
+            relativeMetricValueJsonPath: "['value']"
+            relativeServiceInstanceValueJsonPath: "['metricPath']"
+            timestampFormat: Milliseconds
+          groupName: gn1
   enabled: false
