@@ -1,0 +1,13 @@
+monitoredService:
+  orgIdentifier: tt1
+  projectIdentifier: aa
+  identifier: abcd_local_k3d_env
+  name: abcd_local_k3d_env
+  type: Application
+  description: ""
+  serviceRef: abcd
+  environmentRef: local_k3d_env
+  environmentRefList:
+  - local_k3d_env
+  sources: {}
+  enabled: false
